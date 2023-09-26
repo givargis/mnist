@@ -58,10 +58,10 @@ const double *ann_activate(struct ann *ann, const double *x);
  * k  : batch size equal to 1 or more
  *
  * note: The function will use k to determine the number of input/output pairs
- *       used in this round of training. The ann, when opened will be in a
+ *       used in this round of training. The ann, when opened, will be in a
  *       random state of training. Each subsequent call to ann_train() will
  *       learn at the specified learning rate. The x/y vectors are assumed to
- *       be 2d C arrays (i.e., row-wise ordering of the input/output pairs).
+ *       be C arrays (i.e., row-wise ordering of the input/output pairs).
  */
 
 void ann_train(struct ann *ann,
