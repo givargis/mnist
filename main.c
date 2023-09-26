@@ -189,46 +189,34 @@ main()
 	int train_y_n, train_x_n, test_y_n, test_x_n;
 	uint8_t *train_y, *train_x, *test_y, *test_x;
 	struct ann *ann;
-	int i, e;
+	int i;
 
 	/* open ANN */
 
-	if (!(ann = ann_open(28 * 28, 10, 100, 4))) {
-		return -1;
-	}
+	ann = ann_open(28 * 28, 10, 100, 4);
+	assert( ann );
 
 	/* load train/test data */
 
-	e = 0;
 	train_y = load_labels("data/train-labels", &train_y_n);
 	train_x = load_images("data/train-images", &train_x_n);
 	test_y = load_labels("data/test-labels", &test_y_n);
 	test_x = load_images("data/test-images", &test_x_n);
-	if (!train_y ||
-	    !train_x ||
-	    !test_y ||
-	    !test_x ||
-	    (train_y_n != train_x_n) ||
-	    (test_y_n != test_x_n)) {
-		e = -1;
-		fprintf(stderr, "failed to load valid train/test data");
-	}
+	assert( train_y && train_x && test_y && test_x );
 
 	/* train and test */
 
 	for (i=0; i<EPOCHS; ++i) {
 		printf("--- EPOCH %d ---\n", i);
-		if (!e) {
-			if (train_and_test(ann,
-					   train_y,
-					   train_x,
-					   test_y,
-					   test_x,
-					   train_y_n,
-					   test_y_n)) {
-				e = -1;
-				fprintf(stderr, "failed to train/test");
-			}
+		if (train_and_test(ann,
+				   train_y,
+				   train_x,
+				   test_y,
+				   test_x,
+				   train_y_n,
+				   test_y_n)) {
+			fprintf(stderr, "failed to train/test");
+			break;
 		}
 	}
 
@@ -239,5 +227,5 @@ main()
 	free(train_x);
 	free(test_y);
 	free(test_x);
-	return e;
+	return 0;
 }
