@@ -193,7 +193,10 @@ main()
 
 	/* open ANN */
 
-	ann = ann_open(28 * 28, 10, 100, 4);
+	ann = ann_open(28 * 28, /* input image size is 28x28 */
+		       10,      /* 10 possible outputs */
+		       100,     /* 100 neurons for the hidden layers */
+		       4);      /* 2 hidden layers + input/output layers */
 	assert( ann );
 
 	/* load train/test data */
