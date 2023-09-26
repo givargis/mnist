@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <assert.h>
 #include "ann.h"
 
 #define BATCH  8
@@ -59,12 +60,7 @@ train_and_test(struct ann *ann,
 
 	x = (double *)malloc(BATCH * 28 * 28 * sizeof (x[0]));
 	y = (double *)malloc(BATCH * 10 * sizeof (y[0]));
-	if (!x || !y) {
-		free(x);
-		free(y);
-		fprintf(stderr, "out of memory\n");
-		return -1;
-	}
+	assert( x && y );
 
 	/* train */
 
@@ -137,11 +133,7 @@ load_labels(const char *pathname, int *n)
 	(*n) = swap(meta[1]);
 	meta[1] = (*n);
 	data = (uint8_t *)malloc(meta[1]);
-	if (!data) {
-		fclose(file);
-		fprintf(stderr, "out of memory\n");
-		return 0;
-	}
+	assert( data );
 	if ((size_t)meta[1] != fread(data, 1, meta[1], file)) {
 		free(data);
 		fclose(file);
@@ -180,11 +172,7 @@ load_images(const char *pathname, int *n)
 	(*n) = swap(meta[1]);
 	meta[1] = (*n) * 28 * 28;
 	data = (uint8_t *)malloc(meta[1]);
-	if (!data) {
-		fclose(file);
-		fprintf(stderr, "out of memory\n");
-		return 0;
-	}
+	assert( data );
 	if ((size_t)meta[1] != fread(data, 1, meta[1], file)) {
 		free(data);
 		fclose(file);
