@@ -12,20 +12,20 @@
 struct ann;
 
 /**
- * Opens (i.e., creates and initializes) a new ann object.
+ * Opens (i.e., creates and initializes) a new ann handle.
  *
  * input : number of input neurons
  * output: number of output neurons
  * hidden: number of hidden neurons per layer
  * layers: number of layers including input/output layers
  *
- * return: an ann object or NULL on error
+ * return: an ann handle or NULL on error
  */
 
 struct ann *ann_open(int input, int output, int hidden, int layers);
 
 /**
- * Closes a previously opened ann object.
+ * Closes a previously opened ann handle.
  *
  * ann: an ann handle previously obtained by calling ann_open() or NULL
  */
@@ -40,7 +40,7 @@ void ann_close(struct ann *ann);
  *
  * return: an array of values with size equal to output argument of ann_open()
  *
- * note: The return vector memory is only valid while the ann object is
+ * note: The return vector memory is only valid while the ann handle is
  *       open. The content of the return vector will be stable until a
  *       subsequent call to ann_activate() or ann_train(). This function
  *       is not re-entrant.
